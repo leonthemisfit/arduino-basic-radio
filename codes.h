@@ -11,13 +11,6 @@ enum CMD {
   TX_TUNE_STATUS = 0x33
 };
 
-enum PROP {
-  REFCLK_FREQ = 0x0201,
-  TX_PREEMPHASIS = 0x2106,
-  TX_ACOMP_GAIN = 0x2204,
-  TX_ACOMP_ENABLE = 0x2200
-};
-
 enum STATUS {
   CTS = 0x80,
   ERR = 0x40,
