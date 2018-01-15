@@ -37,7 +37,7 @@ bool Radio::send(const ushort data[]) {
     status = Wire.read();
   }
 
-  return true;
+  return (status & STATUS::ERR) != STATUS::ERR;
 }
 
 bool Radio::power_up() {

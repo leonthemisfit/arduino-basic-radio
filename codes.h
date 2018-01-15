@@ -12,13 +12,13 @@ enum CMD {
 
 enum STATUS {
   CTS = 0x80,
-  ERR = 0x02,
+  ERR = 0x40,
   STC = 0x80
 };
 
 namespace ARGS {
   enum POWER_UP {
-    TX_MODE = 0x02,
+    TX_MODE = 0xC2,
     OP_MODE = 0x50
   };
 
