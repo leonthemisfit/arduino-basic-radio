@@ -54,13 +54,22 @@ bool Radio::power_up() {
 
 ushort Radio::get_rev() {
   ushort data[] = { CMD::GET_REV };
-  send(data);
-  Wire.requestFrom(_addr, RESP_LENS::GET_REV_LEN);
-  ushort resp[RESP_LENS::GET_REV_LEN];
-  for (int i = 0; i < RESP_LENS::GET_REV_LEN; i++) {
-    resp[i] = Wire.read();
+  if (send(data)) {
+    Wire.requestFrom(_addr, RESP_LENS::GET_REV_LEN);
+    ushort resp[RESP_LENS::GET_REV_LEN];
+    for (int i = 0; i < RESP_LENS::GET_REV_LEN; i++) {
+      resp[i] = Wire.read();
+    }
+    if ((resp[0] & STATUS::CTS) == STATUS::CTS) {
+      return resp[1];
+    }
+    else {
+      return 0;
+    }
   }
-  return resp[1];
+  else {
+    return 0;
+  }
 }
 
 bool Radio::set_freq(uint freq) {
