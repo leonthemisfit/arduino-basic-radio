@@ -89,7 +89,7 @@ bool Radio::set_freq(uint freq) {
 ushort Radio::get_int_status() {
   ushort data[] = { CMD::GET_INT_STATUS };
   if (send(data)) {
-    Wire.requestFrom(_addr, RESP_LENS::INT_STATUS_LEN);
+    Wire.requestFrom(_addr, 1);
     while (Wire.available() < 1) {
       delay(1);
     }
@@ -118,6 +118,18 @@ bool Radio::check_tx_tune() {
       resp[i] = Wire.read();
     }
     return (resp[0] & STATUS::CTS) == STATUS::CTS;
+  }
+  else {
+    return false;
+  }
+}
+
+bool Radio::set_tx_power(const ushort pwr) {
+  ushort data[] = { CMD::TX_TUNE_POWER, RESERVED, RESERVED, pwr, RESERVED };
+  if (send(data)) {
+    Wire.requestFrom(_addr, 1);
+    ushort stat = Wire.read();
+    return (stat & STATUS::CTS) == STATUS::CTS;
   }
   else {
     return false;

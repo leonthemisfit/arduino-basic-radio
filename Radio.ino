@@ -88,32 +88,31 @@ bool check_tune_status() {
   }
 }
 
+bool tune_power() {
+  Serial.println();
+  Serial.println("Setting Tune Power");
+  if (radio.set_tx_power()) {
+    Serial.println("Done");
+    return true;
+  }
+  else {
+    Serial.println("Fail");
+    return false;
+  }
+}
+
 void setup() {
   Serial.begin(BAUD);
   Wire.begin();
   pinMode(RESET, OUTPUT);
 
   reset();
-
-  if (!power_up()) {
-    return;
-  }
-
-  if (!get_rev()) {
-    return;
-  }
-
-  if (!set_freq()) {
-    return;
-  }
-
-  if (!stc_loop()) {
-    return;
-  }
-
-  if (!check_tune_status()) {
-    return;
-  }
+  if (!power_up()) { return; }
+  if (!get_rev()) { return; }
+  if (!set_freq()) { return; }
+  if (!stc_loop()) { return; }
+  if (!check_tune_status()) { return; }
+  if (!tune_power()) { return; }
 }
 
 void loop() {
