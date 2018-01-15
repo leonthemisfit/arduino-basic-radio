@@ -76,7 +76,14 @@ bool Radio::set_freq(uint freq) {
   ushort high = (freq >> 8) & 0xFF;
   ushort low = freq & 0xFF;
   ushort data[] = { CMD::TX_TUNE_FREQ, RESERVED, high, low };
-  return send(data);
+  if (send(data)) {
+    Wire.requestFrom(_addr, 1);
+    ushort stat = Wire.read();
+    return (stat & STATUS::CTS) == STATUS::CTS;
+  }
+  else {
+    return false;
+  }
 }
 
 ushort Radio::get_int_status() {
