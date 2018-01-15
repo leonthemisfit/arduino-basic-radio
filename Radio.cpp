@@ -18,8 +18,6 @@ void Radio::reset() {
 
 bool Radio::send(const ushort data[], int len) {
   Wire.beginTransmission(_addr);
-  //int len = count(data);
-  //Serial.println(len);
   for (int i = 0; i < len; i++) {
     Wire.write(data[i]);
   }
