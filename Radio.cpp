@@ -25,7 +25,7 @@ bool Radio::send(const ushort data[]) {
   Wire.endTransmission();
 
   ushort status = 0, timeout = 100;
-  while (!(status & STATUS::CTS)) {
+  while ((status & STATUS::CTS) != STATUS::CTS) {
     Wire.requestFrom(_addr, 1);
     while(Wire.available() < 1 && timeout > 0) {
       delay(1);
