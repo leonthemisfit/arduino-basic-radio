@@ -117,8 +117,7 @@ bool Radio::check_tx_tune() {
     for (int i = 0; i < RESP_LENS::TX_TUNE_STATUS_LEN; i++) {
       resp[i] = Wire.read();
     }
-    return (((resp[0] & STATUS::CTS) == STATUS::CTS) &&
-      ((resp[0] & STATUS::ERR) != STATUS::ERR));
+    return (resp[0] & STATUS::CTS) == STATUS::CTS;
   }
   else {
     return false;
