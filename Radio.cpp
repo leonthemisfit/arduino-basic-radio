@@ -42,7 +42,14 @@ bool Radio::send(const ushort data[]) {
 
 bool Radio::power_up() {
   ushort data[] = { CMD::POWER_UP, ARGS::POWER_UP::TX_MODE, ARGS::POWER_UP::OP_MODE };
-  return send(data);
+  if (send(data)) {
+    Wire.requestFrom(_addr, 1);
+    ushort stat = Wire.read();
+    return (stat & STATUS::CTS) == STATUS::CTS;
+  }
+  else {
+    return false;
+  }
 }
 
 ushort Radio::get_rev() {
