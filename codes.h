@@ -13,7 +13,7 @@ enum CMD {
 enum STATUS {
   CTS = 0x80,
   ERR = 0x40,
-  STC = 0x80
+  STC = 0x81
 };
 
 namespace ARGS {
