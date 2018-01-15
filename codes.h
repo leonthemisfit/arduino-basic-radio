@@ -6,6 +6,7 @@ enum CMD {
   GET_REV = 0x02,
   GET_INT_STATUS = 0x14,
   TX_TUNE_FREQ = 0x30,
+  TX_TUNE_POWER = 0x31,
   TX_TUNE_STATUS = 0x33
 };
 
@@ -28,6 +29,5 @@ namespace ARGS {
 
 enum RESP_LENS {
   GET_REV_LEN = 9,
-  INT_STATUS_LEN = 1,
   TX_TUNE_STATUS_LEN = 8
 };
