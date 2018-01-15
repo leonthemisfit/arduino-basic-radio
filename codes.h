@@ -3,7 +3,7 @@ const unsigned short STC_TIMEOUT = 100;
 
 enum CMD {
   POWER_UP = 0x01,
-  GET_REV = 0x02,
+  GET_REV = 0x10,
   GET_INT_STATUS = 0x14,
   TX_TUNE_FREQ = 0x30,
   TX_TUNE_POWER = 0x31,
