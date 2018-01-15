@@ -113,6 +113,11 @@ void setup() {
   if (!stc_loop()) { return; }
   if (!check_tune_status()) { return; }
   if (!tune_power()) { return; }
+  if (!stc_loop()) { return; }
+  if (!check_tune_status()) { return; }
+
+  Serial.println();
+  Serial.println("Setup Complete");
 }
 
 void loop() {
