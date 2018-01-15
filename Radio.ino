@@ -6,7 +6,7 @@ const ushort RESET = 12;
 const ushort TX_PWR = 115;
 const uint FREQ = 10790;
 const uint BAUD = 9600;
-const ushort REV = 16;
+const ushort REV = 13;
 
 Radio radio = Radio(ADDR, RESET);
 
