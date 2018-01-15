@@ -1,10 +1,11 @@
 #include "Radio.h"
+#include "codes.h"
 #include <Wire.h>
 
 const ushort ADDR = 0x63;
 const ushort RESET = 12;
 const ushort TX_PWR = 115;
-const uint FREQ = 10790;
+const uint FREQ = 9890;
 const uint BAUD = 9600;
 const ushort REV = 13;
 

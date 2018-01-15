@@ -39,16 +39,6 @@ bool Radio::send(const ushort data[], int len) {
   return (status & STATUS::ERR) != STATUS::ERR;
 }
 
-
-bool Radio::set_property(const uint prop, const uint prop_val) {
-  ushort prop_high = (prop >> 8) & 0xFF;
-  ushort prop_low = prop & 0xFF;
-  ushort val_high = (prop_val >> 8) & 0xFF;
-  ushort val_low = prop_val & 0xFF;
-  ushort data[] = { CMD::SET_PROPERTY, RESERVED, prop_high, prop_low, val_high, val_low };
-  return send(data, 6);
-}
-
 bool Radio::power_up() {
   ushort data[] = { CMD::POWER_UP, ARGS::POWER_UP::TX_MODE, ARGS::POWER_UP::OP_MODE };
   if (send(data, 3)) {

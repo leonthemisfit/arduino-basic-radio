@@ -15,7 +15,7 @@ enum PROP {
   REFCLK_FREQ = 0x0201,
   TX_PREEMPHASIS = 0x2106,
   TX_ACOMP_GAIN = 0x2204,
-  TX_ACOMP_ENABLE = 0x220
+  TX_ACOMP_ENABLE = 0x2200
 };
 
 enum STATUS {
@@ -26,7 +26,7 @@ enum STATUS {
 
 namespace ARGS {
   enum POWER_UP {
-    TX_MODE = 0xC2,
+    TX_MODE = 0x12,
     OP_MODE = 0x50
   };
 
