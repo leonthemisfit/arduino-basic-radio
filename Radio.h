@@ -1,4 +1,3 @@
-#define count(a) sizeof(a) / sizeof(a[0])
 #define ushort unsigned short
 #define uint unsigned int
 
@@ -7,7 +6,7 @@ public:
   Radio(short addr, uint reset);
 
   void reset();
-  bool send(const ushort data[]);
+  bool send(const ushort data[], int len);
   bool power_up();
   ushort get_rev();
   bool set_freq(uint freq);

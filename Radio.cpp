@@ -16,9 +16,10 @@ void Radio::reset() {
     digitalWrite(_reset, HIGH);
 }
 
-bool Radio::send(const ushort data[]) {
+bool Radio::send(const ushort data[], int len) {
   Wire.beginTransmission(_addr);
-  int len = count(data);
+  //int len = count(data);
+  //Serial.println(len);
   for (int i = 0; i < len; i++) {
     Wire.write(data[i]);
   }
@@ -42,7 +43,7 @@ bool Radio::send(const ushort data[]) {
 
 bool Radio::power_up() {
   ushort data[] = { CMD::POWER_UP, ARGS::POWER_UP::TX_MODE, ARGS::POWER_UP::OP_MODE };
-  if (send(data)) {
+  if (send(data, 3)) {
     Wire.requestFrom(_addr, 1);
     ushort stat = Wire.read();
     return (stat & STATUS::CTS) == STATUS::CTS;
@@ -54,7 +55,7 @@ bool Radio::power_up() {
 
 ushort Radio::get_rev() {
   ushort data[] = { CMD::GET_REV };
-  if (send(data)) {
+  if (send(data, 1)) {
     Wire.requestFrom(_addr, RESP_LENS::GET_REV_LEN);
     ushort resp[RESP_LENS::GET_REV_LEN];
     for (int i = 0; i < RESP_LENS::GET_REV_LEN; i++) {
@@ -76,7 +77,7 @@ bool Radio::set_freq(uint freq) {
   ushort high = (freq >> 8) & 0xFF;
   ushort low = freq & 0xFF;
   ushort data[] = { CMD::TX_TUNE_FREQ, RESERVED, high, low };
-  if (send(data)) {
+  if (send(data, 4)) {
     Wire.requestFrom(_addr, 1);
     ushort stat = Wire.read();
     return (stat & STATUS::CTS) == STATUS::CTS;
@@ -88,7 +89,7 @@ bool Radio::set_freq(uint freq) {
 
 ushort Radio::get_int_status() {
   ushort data[] = { CMD::GET_INT_STATUS };
-  if (send(data)) {
+  if (send(data, 1)) {
     Wire.requestFrom(_addr, 1);
     while (Wire.available() < 1) {
       delay(1);
@@ -111,7 +112,7 @@ bool Radio::stc_loop() {
 
 bool Radio::check_tx_tune() {
   ushort data[] = { CMD::TX_TUNE_STATUS, ARGS::TX_TUNE_STATUS::INTACK };
-  if (send(data)) {
+  if (send(data, 2)) {
     Wire.requestFrom(_addr, RESP_LENS::TX_TUNE_STATUS_LEN);
     ushort resp[RESP_LENS::TX_TUNE_STATUS_LEN];
     for (int i = 0; i < RESP_LENS::TX_TUNE_STATUS_LEN; i++) {
@@ -126,7 +127,7 @@ bool Radio::check_tx_tune() {
 
 bool Radio::set_tx_power(const ushort pwr) {
   ushort data[] = { CMD::TX_TUNE_POWER, RESERVED, RESERVED, pwr, RESERVED };
-  if (send(data)) {
+  if (send(data, 5)) {
     Wire.requestFrom(_addr, 1);
     ushort stat = Wire.read();
     return (stat & STATUS::CTS) == STATUS::CTS;
