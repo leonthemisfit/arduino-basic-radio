@@ -14,6 +14,7 @@ public:
   bool stc_loop();
   bool check_tx_tune();
   bool set_tx_power(const ushort pwr=115);
+  bool set_property(const uint prop, const uint val);
 private:
   short _addr;
   uint _reset;

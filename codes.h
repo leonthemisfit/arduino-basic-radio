@@ -26,9 +26,17 @@ namespace ARGS {
   enum TX_TUNE_STATUS {
     INTACK = 0x01
   };
+
+  enum TX_ACOMP_ENABLE {
+    LIMITEN_ACEN = 0x3000
+  };
 }
 
 enum RESP_LENS {
   GET_REV_LEN = 9,
   TX_TUNE_STATUS_LEN = 8
+};
+
+enum PROPS {
+  TX_ACOMP_ENABLE = 0x2200
 };

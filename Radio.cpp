@@ -137,3 +137,13 @@ bool Radio::set_tx_power(const ushort pwr) {
     return false;
   }
 }
+
+bool Radio::set_property(const uint prop, const uint val) {
+  ushort prop_high = (prop >> 8) & 0xFF;
+  ushort prop_low = prop & 0xFF;
+  ushort val_high = (val >> 8) & 0xFF;
+  ushort val_low = val & 0xFF;
+
+  ushort data[] = { CMD::SET_PROPERTY, RESERVED, prop_high, prop_low, val_high, val_low };
+  return send(data, 6);
+}
