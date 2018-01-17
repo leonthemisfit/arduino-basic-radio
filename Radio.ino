@@ -11,24 +11,22 @@ const ushort REV = 13;
 
 Radio radio = Radio(ADDR, RESET);
 
+bool print_status(bool cond) {
+  Serial.println(cond ? "Pass" : "Fail");
+  return cond;
+}
+
 void reset() {
   Serial.println();
   Serial.println("Resetting Radio");
   radio.reset();
-  Serial.println("Done");
+  print_status(true);
 }
 
 bool power_up() {
   Serial.println();
   Serial.println("Powering Radio Up");
-  if (radio.power_up()) {
-    Serial.println("Done");
-    return true;
-  }
-  else {
-    Serial.println("Failed");
-    return false;
-  }
+  return print_status(radio.power_up());
 }
 
 bool get_rev() {
@@ -37,14 +35,7 @@ bool get_rev() {
   ushort rev = radio.get_rev();
   Serial.print("\tRev: ");
   Serial.println(rev);
-  if (rev == REV) {
-    Serial.println("Pass");
-    return true;
-  }
-  else {
-    Serial.println("Fail");
-    return false;
-  }
+  return print_status(rev == REV);
 }
 
 bool set_freq() {
@@ -53,53 +44,25 @@ bool set_freq() {
   Serial.print(FREQ / 100);
   Serial.print(".");
   Serial.println(FREQ % 100);
-  if (radio.set_freq(FREQ)) {
-    Serial.println("Done");
-    return true;
-  }
-  else {
-    Serial.println("Fail");
-    return false;
-  }
+  return print_status(radio.set_freq(FREQ));
 }
 
 bool stc_loop() {
   Serial.println();
   Serial.println("Waiting for STC bit");
-  if (radio.stc_loop()) {
-    Serial.println("Pass");
-    return true;
-  }
-  else {
-    Serial.println("Fail");
-    return false;
-  }
+  return print_status(radio.stc_loop());
 }
 
 bool check_tune_status() {
   Serial.println();
   Serial.println("Checking Tune Status");
-  if (radio.check_tx_tune()) {
-    Serial.println("Pass");
-    return true;
-  }
-  else {
-    Serial.println("Fail");
-    return false;
-  }
+  return print_status(radio.check_tx_tune());
 }
 
 bool tune_power() {
   Serial.println();
   Serial.println("Setting Tune Power");
-  if (radio.set_tx_power()) {
-    Serial.println("Done");
-    return true;
-  }
-  else {
-    Serial.println("Fail");
-    return false;
-  }
+  return print_status(radio.set_tx_power());
 }
 
 void setup() {
