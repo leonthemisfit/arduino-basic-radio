@@ -10,6 +10,7 @@ const uint BAUD = 9600;
 const ushort REV = 13;
 
 Radio radio = Radio(ADDR, RESET);
+bool initialized = false;
 
 bool print_status(bool cond) {
   Serial.println(cond ? "Pass" : "Fail");
@@ -72,10 +73,8 @@ bool tune_power() {
   return print_status(radio.set_tx_power());
 }
 
-void setup() {
-  Serial.begin(BAUD);
-  Wire.begin();
-  pinMode(RESET, OUTPUT);
+void init_radio() {
+  initialized = true;
 
   reset();
   if (!power_up()) { return; }
@@ -92,6 +91,14 @@ void setup() {
   Serial.println("Setup Complete");
 }
 
-void loop() {
+void setup() {
+  Serial.begin(BAUD);
+  Wire.begin();
+  pinMode(RESET, OUTPUT);
+}
 
+void loop() {
+  if (!initialized) {
+    init_radio();
+  }
 }
