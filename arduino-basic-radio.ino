@@ -38,6 +38,13 @@ bool get_rev() {
   return print_status(rev == REV);
 }
 
+bool enable_acomp() {
+  Serial.println();
+  Serial.println("Enabling ACOMP");
+  return print_status(
+    radio.set_property(PROPS::TX_ACOMP_ENABLE, ARGS::TX_ACOMP_ENABLE::LIMITEN_ACEN));
+}
+
 bool set_freq() {
   Serial.println();
   Serial.print("Setting Frequency to ");
@@ -73,6 +80,7 @@ void setup() {
   reset();
   if (!power_up()) { return; }
   if (!get_rev()) { return; }
+  if (!enable_acomp()) { return; }
   if (!set_freq()) { return; }
   if (!stc_loop()) { return; }
   if (!check_tune_status()) { return; }
