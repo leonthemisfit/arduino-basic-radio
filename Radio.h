@@ -1,5 +1,5 @@
-#define ushort unsigned short
-#define uint unsigned int
+typedef unsigned short ushort;
+typedef unsigned int uint;
 
 class Radio {
 public:
