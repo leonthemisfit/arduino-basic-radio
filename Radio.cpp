@@ -3,10 +3,7 @@
 #include <Wire.h>
 #include <Arduino.h>
 
-Radio::Radio(short addr, uint reset) {
-  _addr = addr;
-  _reset = reset;
-}
+Radio::Radio(short addr, uint reset) : _addr{addr}, _reset{reset} {}
 
 void Radio::reset() {
     digitalWrite(_reset, HIGH);
