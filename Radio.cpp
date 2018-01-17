@@ -14,9 +14,15 @@ void Radio::reset() {
 }
 
 bool Radio::send(const ushort data[], int len) {
+  if (len < 1 || sizeof(data) < 1) {
+    return false;
+  }
+
   Wire.beginTransmission(_addr);
   for (int i = 0; i < len; i++) {
-    Wire.write(data[i]);
+    if (Wire.write(data[i]) < 1) {
+      return false;
+    }
   }
   Wire.endTransmission();
 
