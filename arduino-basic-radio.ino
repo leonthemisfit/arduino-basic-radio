@@ -75,6 +75,13 @@ bool set_attack() {
   return print_status(radio.set_property(PROPS::TX_ACOMP_ATTACK_TIME, ATTACK));
 }
 
+bool set_asq_interrupt() {
+  Serial.println();
+  Serial.println("Setting ASQ Interrupt");
+  return print_status(radio.set_property(PROPS::TX_ASQ_INTERRUPT_SELECT,
+    ARGS::TX_ASQ_INTERRUPT_SELECT::ALL));
+}
+
 bool set_freq() {
   Serial.println();
   Serial.print("Setting Frequency to ");
@@ -113,6 +120,7 @@ void init_radio() {
   if (!set_gain()) { return; }
   if (!set_limit_release()) { return; }
   if (!set_attack()) { return; }
+  if (!set_asq_interrupt()) { return; }
   if (!set_freq()) { return; }
   if (!stc_loop()) { return; }
   if (!check_tune_status()) { return; }
