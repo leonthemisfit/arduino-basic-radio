@@ -9,6 +9,11 @@ const uint FREQ = 10150;
 const uint BAUD = 9600;
 const ushort REV = 13;
 
+const uint THRESHOLD = 0xFFEB;
+const uint GAIN = 0x005;
+const uint LIMITER_RELEASE = 0x0033;
+const uint ATTACK = 0x0003;
+
 Radio radio = Radio(ADDR, RESET);
 bool initialized = false;
 
@@ -46,6 +51,30 @@ bool enable_acomp() {
     radio.set_property(PROPS::TX_ACOMP_ENABLE, ARGS::TX_ACOMP_ENABLE::LIMITEN_ACEN));
 }
 
+bool set_threshold() {
+  Serial.println();
+  Serial.println("Setting ACOMP Threadhold");
+  return print_status(radio.set_property(PROPS::TX_ACOMP_THRESHOLD, THRESHOLD));
+}
+
+bool set_gain() {
+  Serial.println();
+  Serial.println("Setting ACOMP Gain");
+  return print_status(radio.set_property(PROPS::TX_ACOMP_GAIN, GAIN));
+}
+
+bool set_limit_release() {
+  Serial.println();
+  Serial.println("Setting Limiter Release");
+  return print_status(radio.set_property(PROPS::TX_LIMITER_RELEASE_TIME, LIMITER_RELEASE));
+}
+
+bool set_attack() {
+  Serial.println();
+  Serial.println("Setting ACOMP Attack");
+  return print_status(radio.set_property(PROPS::TX_ACOMP_ATTACK_TIME, ATTACK));
+}
+
 bool set_freq() {
   Serial.println();
   Serial.print("Setting Frequency to ");
@@ -80,6 +109,10 @@ void init_radio() {
   if (!power_up()) { return; }
   if (!get_rev()) { return; }
   if (!enable_acomp()) { return; }
+  if (!set_threshold()) { return; }
+  if (!set_gain()) { return; }
+  if (!set_limit_release()) { return; }
+  if (!set_attack()) { return; }
   if (!set_freq()) { return; }
   if (!stc_loop()) { return; }
   if (!check_tune_status()) { return; }
